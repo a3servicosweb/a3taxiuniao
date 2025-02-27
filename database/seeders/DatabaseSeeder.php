@@ -17,6 +17,7 @@ class DatabaseSeeder extends Seeder
         // User::factory(10)->create();
 
         User::factory()->create([
+            'cpf_number' => '79899041017',
             'name' => 'Admin',
             'email' => 'admin@gmail.com',
             'password' => Hash::make('123456'),

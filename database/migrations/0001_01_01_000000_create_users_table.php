@@ -13,10 +13,21 @@ return new class extends Migration
     {
         Schema::create('users', function (Blueprint $table) {
             $table->id();
+            $table->string('cpf_number'); // CPF
             $table->string('name');
+            $table->string('nickname')->nullable();
+            $table->string('nationality')->nullable();
+            $table->string('born_in')->nullable();
+            $table->enum('gender', ['Feminino', 'Masculino', 'Não Binário', 'Prefiro não informar']);
+            $table->string('fathers_name')->nullable();
+            $table->string('mothers_name')->nullable();
+            $table->enum('marital_status', ['Casado', 'Divorciado', 'Maritral', 'Solteiro', 'Viúvo']);
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
+            $table->string('photo')->nullable();
+            $table->date('birth_date')->nullable();
             $table->string('password');
+            $table->boolean('isActive')->default(true);
             $table->rememberToken();
             $table->timestamps();
         });
