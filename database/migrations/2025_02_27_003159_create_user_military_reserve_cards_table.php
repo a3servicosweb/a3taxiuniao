@@ -18,10 +18,17 @@ return new class extends Migration
                 ->cascadeOnUpdate()
                 ->cascadeOnDelete();
             $table->string('reserve_card_number')->unique()->nullable();
-            $table->string('series number')->nullable();
+            $table->string('series_number')->nullable();
             $table->date('issue_date')->nullable();
             $table->timestamps();
         });
+    }
+
+    protected function casts(): array
+    {
+        return [
+            'issue_date' => 'date',
+        ];
     }
 
     /**

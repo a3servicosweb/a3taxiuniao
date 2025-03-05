@@ -79,4 +79,14 @@ class User extends Authenticatable
     {
         return $this->hasOne(UserMilitaryReserveCard::class);
     }
+
+    public function userDriverLicense(): HasOne
+    {
+        return $this->hasOne(UserDriverLicense::class);
+    }
+
+    public function userSocialSecurityNumber(): HasOne
+    {
+        return $this->hasOne(UserSocialSecurityNumber::class);
+    }
 }

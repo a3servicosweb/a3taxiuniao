@@ -220,6 +220,53 @@ class UserResource extends Resource
                                             ->label('Data de Emissão')
                                             ->columnSpan(2),
                                     ])->columns(6),
+                                Fieldset::make('Habilitação')->relationship('userDriverLicense')
+                                    ->schema([
+                                        TextInput::make('license_number')
+                                            ->label('Número da CNH')
+                                            ->columnSpan(2)
+                                            ->unique(ignoreRecord: true)
+                                            ->validationMessages([
+                                                'unique' => 'CNH já cadastrada.'
+                                            ]),
+                                        TextInput::make('license_category')
+                                            ->label('Categoria')
+                                            ->columnSpan(2),
+                                        DatePicker::make('issue_date')
+                                            ->label('Data de Emissão')
+                                            ->columnSpan(2),
+                                        DatePicker::make('expiration_date')
+                                            ->label('Data de Validade')
+                                            ->columnSpan(2),
+                                        DatePicker::make('first_license_date')
+                                            ->label('Data da 1ª Habilitação')
+                                            ->columnSpan(2),
+                                    ])->columns(6),
+                                Fieldset::make('Nº de Benefício do INSS')
+                                    ->relationship('userSocialSecurityNumber')
+                                    ->schema([
+                                        TextInput::make('pis_pasep')
+                                            ->label('PIS/PASEP')
+                                            ->columnSpan(2)
+                                            ->unique(ignoreRecord: true)
+                                            ->validationMessages([
+                                                'unique' => 'PIS/PASEP já cadastrado.'
+                                            ]),
+                                        TextInput::make('nit')
+                                            ->label('NIT')
+                                            ->columnSpan(2)
+                                            ->unique(ignoreRecord: true)
+                                            ->validationMessages([
+                                                'unique' => 'NIT já cadastrado.'
+                                            ]),
+                                        TextInput::make('nis')
+                                            ->label('NIS')
+                                            ->columnSpan(2)
+                                            ->unique(ignoreRecord: true)
+                                            ->validationMessages([
+                                                'unique' => 'NIS já cadastrado.'
+                                            ]),
+                                    ])->columns(6),
                             ]),
                         Tabs\Tab::make('Acesso')->schema([
                             Fieldset::make('Acesso')
