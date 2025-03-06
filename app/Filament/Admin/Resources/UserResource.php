@@ -118,7 +118,7 @@ class UserResource extends Resource
                         Tabs\Tab::make('Endereço')
                             ->schema([
                                 Fieldset::make('Endereço')
-                                    ->relationship('userAddress')
+                                    ->relationship('address')
                                     ->schema([
                                         Forms\Components\TextInput::make('postal_code')
                                             ->label('CEP')
@@ -127,9 +127,9 @@ class UserResource extends Resource
                                             ->suffixAction(fn($state, $set) => Action::make('search-action')
                                                 ->icon('heroicon-o-magnifying-glass')
                                                 ->action(function (LivewireComponent $livewire) use ($state, $set) {
-                                                    $livewire->validateOnly('data.userAddress.postal_code',
-                                                        ['data.userAddress.postal_code' => ['required', 'size:9']],
-                                                        ['data.userAddress.postal_code.size' => 'O campo CEP está incompleto'],
+                                                    $livewire->validateOnly('data.address.postal_code',
+                                                        ['data.address.postal_code' => ['required', 'size:9']],
+                                                        ['data.address.postal_code.size' => 'O campo CEP está incompleto'],
                                                     );
 
                                                     $set('number', null);
@@ -142,7 +142,7 @@ class UserResource extends Resource
 
                                                     if (in_array('erro', $cepData)) {
                                                         throw ValidationException::withMessages([
-                                                            'data.userAddress.postal_code' => 'CEP inválido',
+                                                            'data.address.postal_code' => 'CEP inválido',
                                                         ]);
                                                     }
                                                     $set('neighborhood', $cepData['bairro'] ?? null);
@@ -170,7 +170,7 @@ class UserResource extends Resource
                         Tabs\Tab::make('Documentos')
                             ->schema([
                                 Fieldset::make('Identidade')
-                                    ->relationship('userIdentity')
+                                    ->relationship('identity')
                                     ->schema([
                                         TextInput::make('identity_number')
                                             ->label('Número da Identidade')
@@ -187,7 +187,7 @@ class UserResource extends Resource
                                             ->columnSpan(2),
                                     ])->columns(6),
                                 Fieldset::make('Título de Eleitor')
-                                    ->relationship('userElectoral')
+                                    ->relationship('electoral')
                                     ->schema([
                                         TextInput::make('voter_registration_number')
                                             ->label('Número do Título')
@@ -204,7 +204,7 @@ class UserResource extends Resource
                                             ->columnSpan(2),
                                     ])->columns(6),
                                 Fieldset::make('Carteira de Reservista')
-                                    ->relationship('userMilitaryReserveCard')
+                                    ->relationship('militaryReserveCard')
                                     ->schema([
                                         TextInput::make('reserve_card_number')
                                             ->label('Número da Carteira de Reservista')
@@ -220,7 +220,8 @@ class UserResource extends Resource
                                             ->label('Data de Emissão')
                                             ->columnSpan(2),
                                     ])->columns(6),
-                                Fieldset::make('Habilitação')->relationship('userDriverLicense')
+                                Fieldset::make('Habilitação')
+                                    ->relationship('driverLicense')
                                     ->schema([
                                         TextInput::make('license_number')
                                             ->label('Número da CNH')
@@ -243,7 +244,7 @@ class UserResource extends Resource
                                             ->columnSpan(2),
                                     ])->columns(6),
                                 Fieldset::make('Nº de Benefício do INSS')
-                                    ->relationship('userSocialSecurityNumber')
+                                    ->relationship('socialSecurityNumber')
                                     ->schema([
                                         TextInput::make('pis_pasep')
                                             ->label('PIS/PASEP')
@@ -267,6 +268,12 @@ class UserResource extends Resource
                                                 'unique' => 'NIS já cadastrado.'
                                             ]),
                                     ])->columns(6),
+                            ]),
+                        Tabs\Tab::make('Comorbidades')
+                            ->schema([
+                                Forms\Components\Placeholder::make('comorbidades_relation')
+                                    ->label('Gerenciar Comorbidades')
+                                    ->content(view('filament.admin.resources.user-resource.relation-managers.comorbidities')),
                             ]),
                         Tabs\Tab::make('Acesso')->schema([
                             Fieldset::make('Acesso')
@@ -297,7 +304,8 @@ class UserResource extends Resource
                         ]),
                     ]),
 
-            ])->columns(1);
+            ])
+            ->columns(1);
     }
 
     public static function table(Table $table): Table
@@ -320,6 +328,7 @@ class UserResource extends Resource
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),
+                Tables\Actions\DeleteAction::make(),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
@@ -331,7 +340,7 @@ class UserResource extends Resource
     public static function getRelations(): array
     {
         return [
-            //
+            RelationManagers\ComorbiditiesRelationManager::class,
         ];
     }
 

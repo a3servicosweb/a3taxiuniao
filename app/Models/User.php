@@ -4,6 +4,8 @@ namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -60,33 +62,38 @@ class User extends Authenticatable
         ];
     }
 
-    public function userAddress(): HasOne
+    public function address(): HasOne
     {
-        return $this->hasOne(UserAddress::class);
+        return $this->hasOne(Address::class);
     }
 
-    public function userIdentity(): HasOne
+    public function identity(): HasOne
     {
-        return $this->hasOne(UserIdentity::class);
+        return $this->hasOne(Identity::class);
     }
 
-    public function userElectoral(): HasOne
+    public function electoral(): HasOne
     {
-        return $this->hasOne(UserElectoral::class);
+        return $this->hasOne(Electoral::class);
     }
 
-    public function userMilitaryReserveCard(): HasOne
+    public function militaryReserveCard(): HasOne
     {
-        return $this->hasOne(UserMilitaryReserveCard::class);
+        return $this->hasOne(MilitaryReserveCard::class);
     }
 
-    public function userDriverLicense(): HasOne
+    public function driverLicense(): HasOne
     {
-        return $this->hasOne(UserDriverLicense::class);
+        return $this->hasOne(DriverLicense::class);
     }
 
-    public function userSocialSecurityNumber(): HasOne
+    public function socialSecurityNumber(): HasOne
     {
-        return $this->hasOne(UserSocialSecurityNumber::class);
+        return $this->hasOne(SocialSecurityNumber::class);
+    }
+
+    public function comorbidities(): BelongsToMany
+    {
+        return $this->belongsToMany(Comorbidity::class);
     }
 }
