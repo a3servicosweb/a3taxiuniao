@@ -14,6 +14,12 @@ class ComorbiditiesRelationManager extends RelationManager
 {
     protected static string $relationship = 'comorbidities';
 
+    // Adicione este método para fazer o RelationManager aparecer na Tab
+public static function getTabLabel(): string
+{
+    return 'Comorbidades';
+}
+
      protected function getTableFiltersFormWidth(): string
     {
         return '2xl';

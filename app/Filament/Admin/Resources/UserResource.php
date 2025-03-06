@@ -269,12 +269,21 @@ class UserResource extends Resource
                                             ]),
                                     ])->columns(6),
                             ]),
+
                         Tabs\Tab::make('Comorbidades')
-                            ->schema([
-                                Forms\Components\Placeholder::make('comorbidades_relation')
-                                    ->label('Gerenciar Comorbidades')
-                                    ->content(view('filament.admin.resources.user-resource.relation-managers.comorbidities')),
-                            ]),
+                         ->schema([
+                                    Forms\Components\Section::make()
+                                        ->schema([
+                                            Forms\Components\Placeholder::make('comorbidades_info')
+                                                ->content('As comorbidades podem ser gerenciadas após salvar o usuário.')
+                                        ])
+                                        ->visible(fn ($record) => $record === null),
+            
+                                // Remova completamente o ViewField e use um campo oculto
+                                Forms\Components\Hidden::make('comorbidades_placeholder')
+                                    ->visible(fn ($record) => $record !== null),
+                                        ]),
+                
                         Tabs\Tab::make('Acesso')->schema([
                             Fieldset::make('Acesso')
                                 ->schema([
