@@ -4,6 +4,7 @@ namespace App\Filament\Admin\Resources;
 
 use App\Filament\Admin\Resources\UserResource\Pages;
 use App\Filament\Admin\Resources\UserResource\RelationManagers;
+use App\Filament\Admin\Resources\UserResource\RelationManagers\ComorbiditiesRelationManager;
 use App\Models\User;
 use Filament\Forms;
 use Filament\Forms\Components\Actions\Action;
@@ -25,6 +26,8 @@ use Illuminate\Database\Eloquent\SoftDeletingScope;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Validation\ValidationException;
 use Livewire\Component as LivewireComponent;
+use Filament\Forms\Components\Livewire;
+
 
 
 class UserResource extends Resource
@@ -270,20 +273,28 @@ class UserResource extends Resource
                                     ])->columns(6),
                             ]),
 
+//                        Tabs\Tab::make('Comorbidades')
+//                         ->schema([
+//                                    Forms\Components\Section::make()
+//                                        ->schema([
+//                                            Forms\Components\Placeholder::make('comorbidades_info')
+//                                                ->content('As comorbidades podem ser gerenciadas após salvar o usuário.')
+//                                        ])
+//                                        ->visible(fn ($record) => $record === null),
+//
+//                                // Remova completamente o ViewField e use um campo oculto
+//                                Forms\Components\Hidden::make('comorbidades_placeholder')
+//                                    ->visible(fn ($record) => $record !== null),
+//                                        ]),
                         Tabs\Tab::make('Comorbidades')
-                         ->schema([
-                                    Forms\Components\Section::make()
-                                        ->schema([
-                                            Forms\Components\Placeholder::make('comorbidades_info')
-                                                ->content('As comorbidades podem ser gerenciadas após salvar o usuário.')
-                                        ])
-                                        ->visible(fn ($record) => $record === null),
-            
-                                // Remova completamente o ViewField e use um campo oculto
-                                Forms\Components\Hidden::make('comorbidades_placeholder')
-                                    ->visible(fn ($record) => $record !== null),
-                                        ]),
-                
+                            ->visibleOn('edit')
+                            ->icon('heroicon-o-tag')
+                            ->schema([
+                                Livewire::make(ComorbiditiesRelationManager::class, fn (User $record, Pages\EditUser $livewire): array => [
+                                    'ownerRecord' => $record,
+                                    'pageClass' => $livewire::class,
+                                ]),
+                            ]),
                         Tabs\Tab::make('Acesso')->schema([
                             Fieldset::make('Acesso')
                                 ->schema([
@@ -349,7 +360,7 @@ class UserResource extends Resource
     public static function getRelations(): array
     {
         return [
-            RelationManagers\ComorbiditiesRelationManager::class,
+//            ComorbiditiesRelationManager::class,
         ];
     }
 

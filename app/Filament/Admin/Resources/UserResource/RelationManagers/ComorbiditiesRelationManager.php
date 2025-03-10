@@ -15,12 +15,12 @@ class ComorbiditiesRelationManager extends RelationManager
     protected static string $relationship = 'comorbidities';
 
     // Adicione este método para fazer o RelationManager aparecer na Tab
-public static function getTabLabel(): string
-{
-    return 'Comorbidades';
-}
+    public static function getTabLabel(): string
+    {
+        return 'Comorbidades';
+    }
 
-     protected function getTableFiltersFormWidth(): string
+    protected function getTableFiltersFormWidth(): string
     {
         return '2xl';
     }
@@ -29,9 +29,12 @@ public static function getTabLabel(): string
     {
         return $form
             ->schema([
-                Forms\Components\TextInput::make('name')
-                    ->required()
-                    ->maxLength(255),
+                Forms\Components\Select::make('comorbidity_id')
+                    ->label('Comorbidade')
+                    ->relationship(name: 'comorbidity', titleAttribute: 'name')
+                    ->searchable()
+                    ->preload()
+                    ->required(),
             ]);
     }
 
@@ -39,15 +42,17 @@ public static function getTabLabel(): string
     {
         return $table
             ->recordTitleAttribute('name')
+
             ->columns([
-                Tables\Columns\TextColumn::make('name'),
+                Tables\Columns\TextColumn::make('name')
+                    ->label('Nome'),
             ])
             ->filters([
                 //
             ])
             ->headerActions([
 //                Tables\Actions\CreateAction::make(),
-                Tables\Actions\AttachAction::make(),
+                Tables\Actions\AttachAction::make()
             ])
             ->actions([
 //                Tables\Actions\EditAction::make(),
