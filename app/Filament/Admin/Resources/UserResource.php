@@ -284,6 +284,15 @@ class UserResource extends Resource
                                     'pageClass' => $livewire::class,
                                 ]),
                             ]),
+                        Tabs\Tab::make('Vacinas')
+                            ->visibleOn('edit')
+                            ->icon('heroicon-o-beaker')
+                            ->schema([
+                                Livewire::make(RelationManagers\VaccinesRelationManager::class, fn (User $record, Pages\EditUser $livewire): array => [
+                                    'ownerRecord' => $record,
+                                    'pageClass' => $livewire::class,
+                                ]),
+                            ]),
                         Tabs\Tab::make('Acesso')
                             ->icon('heroicon-o-lock-closed')
                             ->schema([
@@ -351,7 +360,6 @@ class UserResource extends Resource
     {
         return [
 //            ComorbiditiesRelationManager::class,
-        RelationManagers\VaccinesRelationManager::class,
         ];
     }
 

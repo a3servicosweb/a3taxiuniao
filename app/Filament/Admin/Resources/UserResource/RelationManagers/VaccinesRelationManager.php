@@ -14,6 +14,12 @@ class VaccinesRelationManager extends RelationManager
 {
     protected static string $relationship = 'vaccines';
 
+    // Adicione este método para fazer o RelationManager aparecer na Tab
+    public static function getTabLabel(): string
+    {
+        return 'Vacinas';
+    }
+
     public function form(Form $form): Form
     {
         return $form
