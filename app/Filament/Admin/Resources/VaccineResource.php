@@ -2,9 +2,9 @@
 
 namespace App\Filament\Admin\Resources;
 
-use App\Filament\Admin\Resources\UserComorbidityResource\Pages;
-use App\Filament\Admin\Resources\UserComorbidityResource\RelationManagers;
-use App\Models\Comorbidity;
+use App\Filament\Admin\Resources\VaccineResource\Pages;
+use App\Filament\Admin\Resources\VaccineResource\RelationManagers;
+use App\Models\Vaccine;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
@@ -13,19 +13,19 @@ use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 
-class ComorbidityResource extends Resource
+class VaccineResource extends Resource
 {
-    protected static ?string $model = Comorbidity::class;
+    protected static ?string $model = Vaccine::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-heart';
+    protected static ?string $navigationIcon = 'heroicon-o-beaker';
 
-    protected static ?string $navigationLabel = 'Comorbidades';
+    protected static ?string $navigationLabel = 'Vacinas';
 
-    protected static ?string $pluralModelLabel = 'Comorbidades';
+    protected static ?string $pluralModelLabel = 'Vacinas';
 
-    protected static ?string $modelLabel = 'Comorbidade';
+    protected static ?string $modelLabel = 'Vacina';
 
-    protected static ?string $slug = 'comorbidades';
+    protected static ?string $slug = 'vacinas';
 
     public static function form(Form $form): Form
     {
@@ -34,7 +34,7 @@ class ComorbidityResource extends Resource
                 Forms\Components\TextInput::make('name')
                     ->label('Nome')
                     ->required()
-                    ->maxLength(100),
+                    ->maxLength(255),
                 Forms\Components\Textarea::make('description')
                     ->label('Descrição')
                     ->columnSpanFull(),
@@ -46,13 +46,11 @@ class ComorbidityResource extends Resource
         return $table
             ->columns([
                 Tables\Columns\TextColumn::make('name')
-                    ->label('Nome')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('created_at')
                     ->label('Criado em')
                     ->dateTime('d/m/Y')
                     ->sortable(),
-//                    ->toggleable(isToggledHiddenByDefault: true),
             ])
             ->filters([
                 //
@@ -78,9 +76,9 @@ class ComorbidityResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index' => Pages\ListComorbidities::route('/'),
-            'create' => Pages\CreateComorbidity::route('/create'),
-            'edit' => Pages\EditComorbidity::route('/{record}/edit'),
+            'index' => Pages\ListVaccines::route('/'),
+            'create' => Pages\CreateVaccine::route('/create'),
+            'edit' => Pages\EditVaccine::route('/{record}/edit'),
         ];
     }
 }

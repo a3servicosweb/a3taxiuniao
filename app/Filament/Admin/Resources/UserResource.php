@@ -52,6 +52,7 @@ class UserResource extends Resource
                 Tabs::make('Tabs')
                     ->tabs([
                         Tabs\Tab::make('Dados Gerais')
+                            ->icon('heroicon-o-bars-4')
                             ->schema([
                                 Split::make([
                                     Section::make([
@@ -119,6 +120,7 @@ class UserResource extends Resource
                                 ])->from('md'),
                             ]),
                         Tabs\Tab::make('Endereço')
+                            ->icon('heroicon-o-home')
                             ->schema([
                                 Fieldset::make('Endereço')
                                     ->relationship('address')
@@ -171,6 +173,7 @@ class UserResource extends Resource
                                     ]),
                             ]),
                         Tabs\Tab::make('Documentos')
+                            ->icon('heroicon-o-document')
                             ->schema([
                                 Fieldset::make('Identidade')
                                     ->relationship('identity')
@@ -272,30 +275,18 @@ class UserResource extends Resource
                                             ]),
                                     ])->columns(6),
                             ]),
-
-//                        Tabs\Tab::make('Comorbidades')
-//                         ->schema([
-//                                    Forms\Components\Section::make()
-//                                        ->schema([
-//                                            Forms\Components\Placeholder::make('comorbidades_info')
-//                                                ->content('As comorbidades podem ser gerenciadas após salvar o usuário.')
-//                                        ])
-//                                        ->visible(fn ($record) => $record === null),
-//
-//                                // Remova completamente o ViewField e use um campo oculto
-//                                Forms\Components\Hidden::make('comorbidades_placeholder')
-//                                    ->visible(fn ($record) => $record !== null),
-//                                        ]),
                         Tabs\Tab::make('Comorbidades')
                             ->visibleOn('edit')
-                            ->icon('heroicon-o-tag')
+                            ->icon('heroicon-o-heart')
                             ->schema([
                                 Livewire::make(ComorbiditiesRelationManager::class, fn (User $record, Pages\EditUser $livewire): array => [
                                     'ownerRecord' => $record,
                                     'pageClass' => $livewire::class,
                                 ]),
                             ]),
-                        Tabs\Tab::make('Acesso')->schema([
+                        Tabs\Tab::make('Acesso')
+                            ->icon('heroicon-o-lock-closed')
+                            ->schema([
                             Fieldset::make('Acesso')
                                 ->schema([
                                     TextInput::make('email')

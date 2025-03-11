@@ -53,6 +53,9 @@ class ComorbiditiesRelationManager extends RelationManager
             ->headerActions([
 //                Tables\Actions\CreateAction::make(),
                 Tables\Actions\AttachAction::make()
+                    ->label('Vincular Comorbidade')
+                    ->modalHeading('Vincular Comorbidade')
+                    ->modalWidth('2xl'),
             ])
             ->actions([
 //                Tables\Actions\EditAction::make(),
