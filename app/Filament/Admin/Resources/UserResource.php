@@ -332,7 +332,6 @@ class UserResource extends Resource
                     ->label('Criado em')
                     ->dateTime('d/m/Y')
                     ->sortable(),
-//                    ->toggleable(isToggledHiddenByDefault: true),
             ])
             ->filters([
                 //
@@ -352,6 +351,7 @@ class UserResource extends Resource
     {
         return [
 //            ComorbiditiesRelationManager::class,
+        RelationManagers\VaccinesRelationManager::class,
         ];
     }
 
