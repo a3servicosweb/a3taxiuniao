@@ -96,4 +96,11 @@ class User extends Authenticatable
     {
         return $this->belongsToMany(Comorbidity::class);
     }
+
+    public function vaccines()
+    {
+        return $this->belongsToMany(Vaccine::class, 'user_vaccine')
+            ->withPivot('dose', 'vaccination_date', 'next_dose_due')
+            ->withTimestamps();
+    }
 }
