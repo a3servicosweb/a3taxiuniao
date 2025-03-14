@@ -15,10 +15,12 @@ class UserSeeder extends Seeder
     public function run(): void
     {
         User::factory()->create([
-            'cpf_number' => '79899041017',
+            'cpf_number' => '46000321368',
             'name' => 'Admin',
             'email' => 'admin@gmail.com',
             'password' => Hash::make('123456'),
+            'gender' => 'Masculino',
+            'marital_status' => 'Casado',
         ]);
     }
 }
