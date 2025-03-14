@@ -14,7 +14,7 @@ class UserSeeder extends Seeder
      */
     public function run(): void
     {
-        User::factory()->create([
+        User::create([
             'cpf_number' => '46000321368',
             'name' => 'Admin',
             'email' => 'admin@gmail.com',
