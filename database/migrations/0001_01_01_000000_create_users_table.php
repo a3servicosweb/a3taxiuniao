@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('cpf_number'); // CPF
             $table->string('name');
+            $table->enum('blood_type', ['A+','A-', 'B+', 'B-', 'AB+', 'AB-', 'O+', 'O-'])->nullable();
             $table->string('nickname')->nullable();
             $table->string('nationality')->nullable();
             $table->string('born_in')->nullable();

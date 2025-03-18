@@ -2,7 +2,9 @@
 
 namespace App\Filament\Admin\Resources\UserResource\RelationManagers;
 
+use App\Models\Comorbidity;
 use Filament\Forms;
+use Filament\Forms\Components\Select;
 use Filament\Forms\Form;
 use Filament\Resources\RelationManagers\RelationManager;
 use Filament\Tables;
@@ -29,9 +31,9 @@ class ComorbiditiesRelationManager extends RelationManager
     {
         return $form
             ->schema([
-                Forms\Components\Select::make('comorbidity_id')
+                Select::make('comorbidity_id')
                     ->label('Comorbidade')
-                    ->relationship(name: 'comorbidity', titleAttribute: 'name')
+                    ->relationship(name: 'comorbidities', titleAttribute: 'name')
                     ->searchable()
                     ->preload()
                     ->required(),

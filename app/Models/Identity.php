@@ -17,6 +17,7 @@ class Identity extends Model
         'identity_number',
         'issuing_authority',
         'issue_date',
+        'expiration_date',
     ];
 
     protected $casts = [

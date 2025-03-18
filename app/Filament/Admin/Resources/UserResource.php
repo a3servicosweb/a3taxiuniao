@@ -58,7 +58,7 @@ class UserResource extends Resource
                                     Section::make([
                                         TextInput::make('cpf_number')
                                             ->autofocus()
-                                            ->columnSpan(2)
+                                            ->columnSpan(1)
                                             ->label('CPF')
                                             ->rule('cpf')
                                             ->maxLength(14)
@@ -73,6 +73,20 @@ class UserResource extends Resource
                                             ->columnSpan(4)
                                             ->required()
                                             ->maxLength(255),
+                                        Select::make('blood_type')
+                                            ->label('Tipo Sanguíneo')
+                                            ->columnSpan(1)
+                                            ->required()
+                                            ->options([
+                                                'A+' => 'A+',
+                                                'A-' => 'A-',
+                                                'B+' => 'B+',
+                                                'B-' => 'B-',
+                                                'AB+' => 'AB+',
+                                                'AB-' => 'AB-',
+                                                'O+' => 'O+',
+                                                'O-' => 'O-',
+                                            ]),
                                         TextInput::make('nickname')
                                             ->label('Apelido')
                                             ->columnSpan(3)
@@ -191,7 +205,10 @@ class UserResource extends Resource
                                         DatePicker::make('issue_date')
                                             ->label('Data de Emissão')
                                             ->columnSpan(2),
-                                    ])->columns(6),
+                                        DatePicker::make('expiration_date')
+                                            ->label('Data de Validade')
+                                            ->columnSpan(2),
+                                    ])->columns(8),
                                 Fieldset::make('Título de Eleitor')
                                     ->relationship('electoral')
                                     ->schema([
@@ -342,6 +359,7 @@ class UserResource extends Resource
                     ->dateTime('d/m/Y')
                     ->sortable(),
             ])
+            ->defaultSort('name')
             ->filters([
                 //
             ])

@@ -20,6 +20,7 @@ return new class extends Migration
             $table->string('identity_number')->unique()->nullable();
             $table->string('issuing_authority')->nullable();
             $table->date('issue_date')->nullable();
+            $table->date('expiration_date')->nullable();
             $table->timestamps();
         });
     }

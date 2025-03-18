@@ -27,6 +27,8 @@ class ComorbidityResource extends Resource
 
     protected static ?string $slug = 'comorbidades';
 
+    protected static ?string $navigationGroup = 'Tabelas Básicas';
+
     public static function form(Form $form): Form
     {
         return $form
@@ -47,13 +49,13 @@ class ComorbidityResource extends Resource
             ->columns([
                 Tables\Columns\TextColumn::make('name')
                     ->label('Nome')
-                    ->searchable(),
+                    ->searchable()
+                    ->sortable(),
                 Tables\Columns\TextColumn::make('created_at')
                     ->label('Criado em')
                     ->dateTime('d/m/Y')
-                    ->sortable(),
-//                    ->toggleable(isToggledHiddenByDefault: true),
             ])
+            ->defaultSort('name')
             ->filters([
                 //
             ])

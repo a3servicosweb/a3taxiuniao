@@ -27,6 +27,8 @@ class VaccineResource extends Resource
 
     protected static ?string $slug = 'vacinas';
 
+    protected static ?string $navigationGroup = 'Tabelas Básicas';
+
     public static function form(Form $form): Form
     {
         return $form
@@ -46,12 +48,14 @@ class VaccineResource extends Resource
         return $table
             ->columns([
                 Tables\Columns\TextColumn::make('name')
-                    ->searchable(),
+                    ->label('Nome')
+                    ->searchable()
+                    ->sortable(),
                 Tables\Columns\TextColumn::make('created_at')
                     ->label('Criado em')
                     ->dateTime('d/m/Y')
-                    ->sortable(),
             ])
+            ->defaultSort('name')
             ->filters([
                 //
             ])

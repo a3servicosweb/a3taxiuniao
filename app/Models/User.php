@@ -31,6 +31,7 @@ class User extends Authenticatable implements FilamentUser
     protected $fillable = [
         'cpf_number',
         'name',
+        'blood_type',
         'nickname',
         'nationality',
         'born_in',
