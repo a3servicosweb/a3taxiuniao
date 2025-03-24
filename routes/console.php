@@ -13,3 +13,4 @@ use Illuminate\Support\Facades\Schedule;
 //})->everyTenSeconds();
 
 Schedule::job(new \App\Jobs\UserCheckIdentityValidity())->everyMinute();
+
