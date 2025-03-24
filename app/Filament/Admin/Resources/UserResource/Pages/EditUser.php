@@ -3,6 +3,7 @@
 namespace App\Filament\Admin\Resources\UserResource\Pages;
 
 use App\Filament\Admin\Resources\UserResource;
+use App\Models\User;
 use Filament\Actions;
 use Filament\Notifications\Notification;
 use Filament\Resources\Pages\EditRecord;
@@ -29,4 +30,10 @@ class EditUser extends EditRecord
 //            Actions\DeleteAction::make(),
         ];
     }
+
+    protected function beforeSave(): void
+    {
+
+    }
 }
+
