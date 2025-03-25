@@ -5,5 +5,7 @@ use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Schedule;
 
 
-Schedule::job(new \App\Jobs\UserCheckIdentityValidity())->everyMinute();
+Schedule::job(new \App\Jobs\UserCheckIdentityValidity())
+    ->daily()
+    ->at('00:00');
 

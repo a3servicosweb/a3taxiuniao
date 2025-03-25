@@ -22,6 +22,7 @@ class Identity extends Model
 
     protected $casts = [
         'issue_date' => 'date',
+        'expiration_date' => 'date',
     ];
 
     public function user(): BelongsTo
