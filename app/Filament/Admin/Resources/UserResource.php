@@ -29,7 +29,6 @@ use Livewire\Component as LivewireComponent;
 use Filament\Forms\Components\Livewire;
 
 
-
 class UserResource extends Resource
 {
     protected static ?string $model = User::class;
@@ -186,6 +185,33 @@ class UserResource extends Resource
                                             ->label('Ponto de Referência')->columnSpanFull(),
                                     ]),
                             ]),
+                        Tabs\Tab::make('Dados Bancários')
+                            ->icon('heroicon-o-home')
+                            ->schema([
+                                Fieldset::make('Dados Bancários')
+                                    ->relationship('bankAccount')
+                                    ->schema([
+                                        TextInput::make('bank_name')
+                                            ->label('Banco')
+                                            ->columnSpan(6),
+                                        TextInput::make('agency_number')
+                                            ->label('Agência')
+                                            ->columnSpan(2),
+                                        TextInput::make('account_number')
+                                            ->label('Conta')
+                                            ->columnSpan(2),
+                                        Select::make('account_type')
+                                            ->label('Tipo de Conta')
+                                            ->columnSpan(2)
+                                            ->options([
+                                                'Corrente' => 'Corrente',
+                                                'Poupança' => 'Poupança',
+                                            ]),
+                                        TextInput::make('pix')
+                                            ->label('Chave PIX')
+                                            ->columnSpan(6),
+                                    ])->columns(6),
+                            ]),
                         Tabs\Tab::make('Documentos')
                             ->icon('heroicon-o-document')
                             ->schema([
@@ -296,7 +322,7 @@ class UserResource extends Resource
                             ->visibleOn('edit')
                             ->icon('heroicon-o-heart')
                             ->schema([
-                                Livewire::make(ComorbiditiesRelationManager::class, fn (User $record, Pages\EditUser $livewire): array => [
+                                Livewire::make(ComorbiditiesRelationManager::class, fn(User $record, Pages\EditUser $livewire): array => [
                                     'ownerRecord' => $record,
                                     'pageClass' => $livewire::class,
                                 ]),
@@ -305,7 +331,7 @@ class UserResource extends Resource
                             ->visibleOn('edit')
                             ->icon('heroicon-o-beaker')
                             ->schema([
-                                Livewire::make(RelationManagers\VaccinesRelationManager::class, fn (User $record, Pages\EditUser $livewire): array => [
+                                Livewire::make(RelationManagers\VaccinesRelationManager::class, fn(User $record, Pages\EditUser $livewire): array => [
                                     'ownerRecord' => $record,
                                     'pageClass' => $livewire::class,
                                 ]),
@@ -313,32 +339,32 @@ class UserResource extends Resource
                         Tabs\Tab::make('Acesso')
                             ->icon('heroicon-o-lock-closed')
                             ->schema([
-                            Fieldset::make('Acesso')
-                                ->schema([
-                                    TextInput::make('email')
-                                        ->columnSpanFull()
-                                        ->email()
-                                        ->required()
-                                        ->unique(ignoreRecord: true)
-                                        ->validationMessages([
-                                            'unique' => 'O Email já cadastrado.'
-                                        ])
-                                        ->maxLength(255),
-                                    TextInput::make('password')
-                                        ->label('Senha')
-                                        ->password()
-                                        ->maxLength(20)
-                                        ->confirmed()
-                                        ->required(fn(string $operation): bool => $operation === 'create')
-                                        ->dehydrated(fn(?string $state) => filled($state)),
-                                    TextInput::make('password_confirmation')
-                                        ->label('Confirme a Senha')
-                                        ->password() // Torna o campo do tipo "password"
-                                        ->maxLength(255)
-                                        ->requiredWith('password')
-                                        ->dehydrated(false), // Não envia o valor deste campo ao backend
-                                ]),
-                        ]),
+                                Fieldset::make('Acesso')
+                                    ->schema([
+                                        TextInput::make('email')
+                                            ->columnSpanFull()
+                                            ->email()
+                                            ->required()
+                                            ->unique(ignoreRecord: true)
+                                            ->validationMessages([
+                                                'unique' => 'O Email já cadastrado.'
+                                            ])
+                                            ->maxLength(255),
+                                        TextInput::make('password')
+                                            ->label('Senha')
+                                            ->password()
+                                            ->maxLength(20)
+                                            ->confirmed()
+                                            ->required(fn(string $operation): bool => $operation === 'create')
+                                            ->dehydrated(fn(?string $state) => filled($state)),
+                                        TextInput::make('password_confirmation')
+                                            ->label('Confirme a Senha')
+                                            ->password() // Torna o campo do tipo "password"
+                                            ->maxLength(255)
+                                            ->requiredWith('password')
+                                            ->dehydrated(false), // Não envia o valor deste campo ao backend
+                                    ]),
+                            ]),
                     ]),
 
             ])

@@ -112,4 +112,9 @@ class User extends Authenticatable implements FilamentUser
             ->withPivot('dose', 'vaccination_date', 'next_dose_due')
             ->withTimestamps();
     }
+
+    public function bankAccount(): HasOne
+    {
+        return $this->hasOne(BankAccount::class);
+    }
 }
