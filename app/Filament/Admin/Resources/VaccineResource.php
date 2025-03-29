@@ -35,9 +35,12 @@ class VaccineResource extends Resource
             ->schema([
                 Forms\Components\TextInput::make('name')
                     ->label('Nome')
+                    ->extraInputAttributes(['onInput' => 'this.value = this.value.toUpperCase()'])
+                    ->autofocus()
                     ->required()
                     ->maxLength(255),
                 Forms\Components\Textarea::make('description')
+                    ->extraInputAttributes(['onInput' => 'this.value = this.value.toUpperCase()'])
                     ->label('Descrição')
                     ->columnSpanFull(),
             ]);

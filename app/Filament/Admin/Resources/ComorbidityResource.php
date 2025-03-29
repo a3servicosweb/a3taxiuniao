@@ -35,10 +35,13 @@ class ComorbidityResource extends Resource
             ->schema([
                 Forms\Components\TextInput::make('name')
                     ->label('Nome')
+                    ->extraInputAttributes(['onInput' => 'this.value = this.value.toUpperCase()'])
+                    ->autofocus()
                     ->required()
                     ->maxLength(100),
                 Forms\Components\Textarea::make('description')
                     ->label('Descrição')
+                    ->extraInputAttributes(['onInput' => 'this.value = this.value.toUpperCase()'])
                     ->columnSpanFull(),
             ]);
     }

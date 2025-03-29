@@ -15,6 +15,7 @@ use Filament\Forms\Components\Section;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\Split;
 use Filament\Forms\Components\Tabs;
+use Filament\Forms\Components\Tabs\Tab;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Toggle;
 use Filament\Forms\Form;
@@ -50,13 +51,14 @@ class UserResource extends Resource
             ->schema([
                 Tabs::make('Tabs')
                     ->tabs([
-                        Tabs\Tab::make('Dados Gerais')
+                        Tab::make('Dados Gerais')
                             ->icon('heroicon-o-bars-4')
                             ->schema([
                                 Split::make([
                                     Section::make([
                                         TextInput::make('cpf_number')
                                             ->autofocus()
+                                            ->extraInputAttributes(['onInput' => 'this.value = this.value.toUpperCase()'])
                                             ->columnSpan(1)
                                             ->label('CPF')
                                             ->rule('cpf')
@@ -69,6 +71,7 @@ class UserResource extends Resource
                                             ]),
                                         TextInput::make('name')
                                             ->label('Nome')
+                                            ->extraInputAttributes(['onInput' => 'this.value = this.value.toUpperCase()'])
                                             ->columnSpan(4)
                                             ->required()
                                             ->maxLength(255),
@@ -88,15 +91,18 @@ class UserResource extends Resource
                                             ]),
                                         TextInput::make('nickname')
                                             ->label('Apelido')
+                                            ->extraInputAttributes(['onInput' => 'this.value = this.value.toUpperCase()'])
                                             ->columnSpan(3)
                                             ->maxLength(50),
                                         DatePicker::make('birth_date')
                                             ->label('Data de Nascimento')
                                             ->columnSpan(3),
                                         TextInput::make('nationality')
+                                            ->extraInputAttributes(['onInput' => 'this.value = this.value.toUpperCase()'])
                                             ->label('Nacionalidade')
                                             ->columnSpan(3),
                                         TextInput::make('born_in')
+                                            ->extraInputAttributes(['onInput' => 'this.value = this.value.toUpperCase()'])
                                             ->label('Naturalidade')
                                             ->columnSpan(3),
                                         Select::make('gender')
@@ -104,23 +110,23 @@ class UserResource extends Resource
                                             ->columnSpan(3)
                                             ->required()
                                             ->options([
-                                                'Feminino' => 'Feminino',
-                                                'Masculino' => 'Masculino',
-                                                'Não Binário' => 'Não Binario',
-                                                'Prefiro não informar' => 'Prefiro não informar',
+                                                'FEMININO' => 'FEMININO',
+                                                'MASCULINO' => 'MASCULINO',
+                                                'NÃO BINÁRIO' => 'NÃO BINÁRIO',
+                                                'PREFIRO NÃO INFORMAR' => 'PREFIRO NÃO INFORMAR',
                                             ]),
                                         Select::make('marital_status')
                                             ->label('Estado Civil')
                                             ->columnSpan(3)
                                             ->required()
                                             ->options([
-                                                'Casado' => 'Casado',
-                                                'Divorciado' => 'Divorciado',
-                                                'Maritral' => 'Maritral',
-                                                'Solteiro' => 'Solteiro',
-                                                'Viúvo' => 'Viúvo',
+                                                'CASADO' => 'CASADO',
+                                                'DIVORCIADO' => 'DIVORCIADO',
+                                                'MARITRAL' => 'MARITRAL',
+                                                'SOLTEIRO' => 'SOLTEIRO',
+                                                'VIÚVO' => 'VIÚVO',
                                             ]),
-                                    ])->columns(6),
+                                   ])->columns(6),
                                     Section::make([
                                         FileUpload::make('photo')
                                             ->label('Foto')
@@ -132,7 +138,7 @@ class UserResource extends Resource
                                     ])->grow(false),
                                 ])->from('md'),
                             ]),
-                        Tabs\Tab::make('Endereço')
+                        Tab::make('Endereço')
                             ->icon('heroicon-o-home')
                             ->schema([
                                 Fieldset::make('Endereço')
@@ -170,22 +176,31 @@ class UserResource extends Resource
                                                 })
                                             ),
                                         Forms\Components\TextInput::make('number')
-                                            ->label('Número'),
+                                            ->label('Número')
+                                            ->extraInputAttributes(['onInput' => 'this.value = this.value.toUpperCase()']),
                                         Forms\Components\TextInput::make('address')
-                                            ->label('Endereço')->columnSpanFull(),
+                                            ->label('Endereço')
+                                            ->columnSpanFull()->extraInputAttributes(['onInput' => 'this.value = this.value.toUpperCase()'])
+                                            ->columnSpanFull(),
                                         Forms\Components\TextInput::make('complement')
-                                            ->label('Complemento')->columnSpanFull(),
+                                            ->label('Complemento')
+                                            ->columnSpanFull()->extraInputAttributes(['onInput' => 'this.value = this.value.toUpperCase()'])
+                                            ->columnSpanFull(),
                                         Forms\Components\TextInput::make('neighborhood')
-                                            ->label('Bairro'),
+                                            ->label('Bairro')
+                                            ->columnSpanFull()->extraInputAttributes(['onInput' => 'this.value = this.value.toUpperCase()']),
                                         Forms\Components\TextInput::make('city')
-                                            ->label('Cidade'),
+                                            ->label('Cidade')
+                                            ->columnSpanFull()->extraInputAttributes(['onInput' => 'this.value = this.value.toUpperCase()']),
                                         Forms\Components\TextInput::make('uf')
-                                            ->label('Estado'),
+                                            ->label('Estado')
+                                            ->columnSpanFull()->extraInputAttributes(['onInput' => 'this.value = this.value.toUpperCase()']),
                                         Forms\Components\TextInput::make('reference_point')
-                                            ->label('Ponto de Referência')->columnSpanFull(),
+                                            ->label('Ponto de Referência')->columnSpanFull()
+                                            ->columnSpanFull()->extraInputAttributes(['onInput' => 'this.value = this.value.toUpperCase()']),
                                     ]),
                             ]),
-                        Tabs\Tab::make('Dados Bancários')
+                        Tab::make('Dados Bancários')
                             ->icon('heroicon-o-home')
                             ->schema([
                                 Fieldset::make('Dados Bancários')
@@ -193,9 +208,11 @@ class UserResource extends Resource
                                     ->schema([
                                         TextInput::make('bank_name')
                                             ->label('Banco')
+                                            ->columnSpanFull()->extraInputAttributes(['onInput' => 'this.value = this.value.toUpperCase()'])
                                             ->columnSpan(6),
                                         TextInput::make('agency_number')
                                             ->label('Agência')
+                                            ->columnSpanFull()->extraInputAttributes(['onInput' => 'this.value = this.value.toUpperCase()'])
                                             ->columnSpan(2),
                                         TextInput::make('account_number')
                                             ->label('Conta')
@@ -204,15 +221,15 @@ class UserResource extends Resource
                                             ->label('Tipo de Conta')
                                             ->columnSpan(2)
                                             ->options([
-                                                'Corrente' => 'Corrente',
-                                                'Poupança' => 'Poupança',
+                                                'CORRENTE' => 'CORRENTE',
+                                                'POUPANÇA' => 'POUPANÇA',
                                             ]),
                                         TextInput::make('pix')
                                             ->label('Chave PIX')
                                             ->columnSpan(6),
                                     ])->columns(6),
                             ]),
-                        Tabs\Tab::make('Documentos')
+                        Tab::make('Documentos')
                             ->icon('heroicon-o-document')
                             ->schema([
                                 Fieldset::make('Identidade')
@@ -227,6 +244,7 @@ class UserResource extends Resource
                                             ]),
                                         TextInput::make('issuing_authority')
                                             ->label('Órgão Expedidor')
+                                            ->columnSpanFull()->extraInputAttributes(['onInput' => 'this.value = this.value.toUpperCase()'])
                                             ->columnSpan(2),
                                         DatePicker::make('issue_date')
                                             ->label('Data de Emissão')
@@ -247,9 +265,11 @@ class UserResource extends Resource
                                             ]),
                                         TextInput::make('voting_zone')
                                             ->label('Zona Eleitoral')
+                                            ->columnSpanFull()->extraInputAttributes(['onInput' => 'this.value = this.value.toUpperCase()'])
                                             ->columnSpan(2),
                                         TextInput::make('voting_section')
                                             ->label('Seção Eleitoral')
+                                            ->columnSpanFull()->extraInputAttributes(['onInput' => 'this.value = this.value.toUpperCase()'])
                                             ->columnSpan(2),
                                     ])->columns(6),
                                 Fieldset::make('Carteira de Reservista')
@@ -257,6 +277,7 @@ class UserResource extends Resource
                                     ->schema([
                                         TextInput::make('reserve_card_number')
                                             ->label('Número da Carteira de Reservista')
+                                            ->columnSpanFull()->extraInputAttributes(['onInput' => 'this.value = this.value.toUpperCase()'])
                                             ->columnSpan(2)
                                             ->unique(ignoreRecord: true)
                                             ->validationMessages([
@@ -281,6 +302,7 @@ class UserResource extends Resource
                                             ]),
                                         TextInput::make('license_category')
                                             ->label('Categoria')
+                                            ->columnSpanFull()->extraInputAttributes(['onInput' => 'this.value = this.value.toUpperCase()'])
                                             ->columnSpan(2),
                                         DatePicker::make('issue_date')
                                             ->label('Data de Emissão')
@@ -318,7 +340,7 @@ class UserResource extends Resource
                                             ]),
                                     ])->columns(6),
                             ]),
-                        Tabs\Tab::make('Comorbidades')
+                        Tab::make('Comorbidades')
                             ->visibleOn('edit')
                             ->icon('heroicon-o-heart')
                             ->schema([
@@ -327,7 +349,7 @@ class UserResource extends Resource
                                     'pageClass' => $livewire::class,
                                 ]),
                             ]),
-                        Tabs\Tab::make('Vacinas')
+                        Tab::make('Vacinas')
                             ->visibleOn('edit')
                             ->icon('heroicon-o-beaker')
                             ->schema([
@@ -336,12 +358,14 @@ class UserResource extends Resource
                                     'pageClass' => $livewire::class,
                                 ]),
                             ]),
-                        Tabs\Tab::make('Acesso')
+                        Tab::make('Acesso')
                             ->icon('heroicon-o-lock-closed')
                             ->schema([
                                 Fieldset::make('Acesso')
                                     ->schema([
                                         TextInput::make('email')
+                                            ->label('Email')
+                                            ->columnSpanFull()->extraInputAttributes(['onInput' => 'this.value = this.value.toLowerCase()'])
                                             ->columnSpanFull()
                                             ->email()
                                             ->required()
@@ -376,10 +400,11 @@ class UserResource extends Resource
         return $table
             ->columns([
                 Tables\Columns\TextColumn::make('name')
+                    ->label('Nome')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('email')
+                    ->label('Email')
                     ->searchable(),
-
                 Tables\Columns\TextColumn::make('created_at')
                     ->label('Criado em')
                     ->dateTime('d/m/Y')
